@@ -1,0 +1,13 @@
+#- name: deliver app (use the GitlabCI! Not ansible!)
+#  hosts: app
+#  become: true
+#  gather_facts: no
+#  roles:
+#    - app
+
+- name: Install docker and docker-compose
+  hosts: docker
+  become: yes
+  roles: 
+#    - docker
+    - docker-compose

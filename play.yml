@@ -1,0 +1,26 @@
+- name: Install docker
+  hosts: docker
+  become: yes
+  roles: 
+    - docker
+
+- name: deliver app (use the GitlabCI! Not ansible!)
+  hosts: app
+  become: true
+  gather_facts: no
+  roles:
+    - app
+
+- name: build and deploy php-fpm
+  hosts: php-fpm
+  become: true
+  gather_facts: no
+  roles:
+    - php-fpm
+
+- name: build and deploy nginx
+  hosts: nginx
+  become: true
+  gather_facts: no
+  roles:
+    - nginx

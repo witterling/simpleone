@@ -1,0 +1,5 @@
+docker_compose_file_destination_directory: /usr/share/docker-build-dir
+
+docker_compose_reqiurments:
+  - jsondiff
+  - pyyaml

@@ -1,0 +1,11 @@
+- name: app | create directory for application ( Dude why r u not using GitlabCI? )
+  file:
+    path: "{{ appfiles_destination_directory }}"
+    state: directory
+    mode: '0755'
+
+- name: app | deliver app code ( Why u afraid of using GitlabCI? )
+  copy:
+    src: "{{ playbook_dir }}/app"
+    dest: "{{ appfiles_destination_directory }}"
+    mode: '0644'

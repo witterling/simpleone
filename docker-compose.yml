@@ -1,0 +1,22 @@
+version: '3'
+services:
+  testnginx:
+    build: 
+      context: ./nginx/files
+      dockerfile: Dockerfile
+    image: nginx
+    ports: 
+      - "80:80"
+    volumes:
+        - ./app:/app
+        - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+    links:
+        - testfpm
+
+  testfpm:
+    build: 
+      context: ./php-fpm
+      dockerfile: Dockerfile
+    image: php-fpm
+    volumes:
+        - ./app:/app

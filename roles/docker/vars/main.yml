@@ -1,0 +1,5 @@
+docker_py_deps:
+  - "python3-devel"
+  - "python3-pip"
+  - "openssl-devel"
+  - "libffi-devel"

@@ -1,0 +1,53 @@
+- name: docker | add Docker GPG key
+  rpm_key:
+    key: "{{ docker_yum_gpg_key }}"
+    state: present
+
+- name: docker | add Docker repository
+  get_url:
+    url: "{{ docker_yum_repo_url }}"
+    dest: "{{ docker_yum_repo_dest }}"
+    owner: root
+    group: root
+    mode: 0644
+
+- name: docker | configure containerd container-selinux
+  package:
+    name: container-selinux
+    state: present
+
+- name: docker | ensure containerd.io is installed
+  package:
+    name: containerd.io
+    state: present
+
+- name: docker | install docker
+  package:
+    name: "{{ docker_package }}"
+    state: present
+    update_cache: yes
+  notify: restart docker
+
+- name: docker | docker service start and enable
+  service:
+    name: docker
+    state: started
+    enabled: true
+
+- name: docker | add users to docker group
+  user:
+    name: "{{ item }}"
+    groups: docker
+    append: true
+  with_items: "{{ docker_users }}"
+
+- name: docker | install system requirements for docker-py
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items: "{{ docker_py_deps }}"
+
+- name: docker | install via pip docker requirments to manage containers
+  pip:
+    name: docker
+    state: present

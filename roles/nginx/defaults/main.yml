@@ -1,0 +1,7 @@
+nginx_docker_file_destination_directory: '/usr/share/docker-build-dir'
+
+links_list: 
+  - 'testfpm:aliastestfpm'
+
+nginx_template_files_list:
+  - default.conf
