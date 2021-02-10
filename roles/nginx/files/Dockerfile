@@ -116,10 +116,14 @@ COPY docker-entrypoint.sh /
 COPY 10-listen-on-ipv6-by-default.sh /docker-entrypoint.d
 COPY 20-envsubst-on-templates.sh /docker-entrypoint.d
 COPY 30-tune-worker-processes.sh /docker-entrypoint.d
+COPY nginx.crt /etc/nginx/nginx.crt
+COPY nginx.key /etc/nginx/nginx.key
 
-ENTRYPOINT ["sh", "/docker-entrypoint.sh"]
+ENTRYPOINT ["/docker-entrypoint.sh"]
 
 EXPOSE 80
+
+EXPOSE 443
 
 STOPSIGNAL SIGQUIT
 

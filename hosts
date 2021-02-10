@@ -3,10 +3,10 @@ nginx
 php-fpm
 
 [nginx]
-test.centos8 ansible_ssh_host=46.243.180.141 ansible_user=user 
+test.centos8 ansible_ssh_host=46.243.180.141 ansible_user=user
 
 [php-fpm]
-test.centos8 ansible_ssh_host=46.243.180.141 ansible_user=user 
+test.centos8 ansible_ssh_host=46.243.180.141 ansible_user=user
 
 [app]
-test.centos8 ansible_ssh_host=46.243.180.141 ansible_user=user 
+test.centos8 ansible_ssh_host=46.243.180.141 ansible_user=user

@@ -15,7 +15,7 @@
   copy:
     src: "{{ role_path }}/files"
     dest: "{{ nginx_docker_file_destination_directory }}/nginx"
-    mode: '0644'
+    mode: '0755'
 
 - name: nginx | build container image
   community.general.docker_image:    
@@ -32,7 +32,9 @@
     state: started
     restart_policy: unless-stopped
     links: "{{ links_list }}"
-    ports: 80:80
+    ports: 
+      - "80:80"
+      - "443:443"
     network_mode: bridge
     volumes:
       - "{{ nginx_docker_file_destination_directory }}/nginx/default.conf:/etc/nginx/conf.d/default.conf"
