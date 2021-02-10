@@ -18,6 +18,6 @@ To play correctly with docker-compose at first time you should **remove build an
 
 To check out proxing domain nginx  add to your /etc/hosts (linux) or ~/windows/system32/drivers/etc/hosts (windows) this
 ```bash
-YOUR_IP woop.fpm
+YOUR_IP fpm.woop
 ```
 YOUR_IP - is ip of the remote host for sure
