@@ -1,20 +1,25 @@
-# Nginx + PHP-FPM + phpinfo
+# Nginx + PHP-FPM + symphony
+
+## Requerments
+
+ansible 2.10.6
+
+ansible-galaxy collection install community.docker
+ansible-galaxy collection install community.general
 
 ## Run it
-
-first step without docker-compose:
 
 ```bash
 ansible-playbook play.yml -i hosts
 ```
-after that u can remove containers on your remote host (also images if you want to build via docker-compose) and try
+
+## Without ansible
+
+You will need installed docker and docker-compose
 
 ```bash
-ansible-playbook play-compose.yml -i hosts
+docker-compose up -d
 ```
-to play it with docker-compose.
-
-To play correctly with docker-compose at first time you should **remove build and run** steps from /roles/nginx/task/main.yml and /roles/php-fpm/task/main.yml
 
 To check out proxing domain nginx  add to your /etc/hosts (linux) or ~/windows/system32/drivers/etc/hosts (windows) this
 ```bash

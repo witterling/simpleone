@@ -1,26 +1,45 @@
-- name: Install docker
-  hosts: docker
+- name: Install docker and docker-compose
+  hosts: app
   become: yes
   roles: 
     - docker
+    - docker-compose
 
-- name: deliver app (use the GitlabCI! Not ansible!)
+- name: archive app
+  hosts: localhost
+  become: yes
+  tasks:
+    - name: Create a zip archive of app (da fuck are u doing?)
+      community.general.archive:
+        path: ./app
+        dest: ./app.zip
+        format: zip
+
+- name: deliver files ( Dude why r u not using GitlabCI? )
   hosts: app
-  become: true
-  gather_facts: no
-  roles:
-    - app
+  become: yes
+  tasks:
+    - name: making a dir for files
+      file:
+        path: /home/user/simpleone-test-project
+        state: directory
+        mode: '0755'
 
-- name: build and deploy php-fpm
-  hosts: php-fpm
-  become: true
-  gather_facts: no
-  roles:
-    - php-fpm
+    - name: deliver app zip and unarchive
+      unarchive:
+        src: "{{ playbook_dir }}/app.zip"
+        dest: /home/user/simpleone-test-project
 
-- name: build and deploy nginx
-  hosts: nginx
-  become: true
-  gather_facts: no
-  roles:
-    - nginx
+    - name: deliver infrafiles 
+      copy:
+        src: "{{ item }}"
+        dest: /home/user/simpleone-test-project
+        mode: '0755'
+      with_items:
+        - "{{ playbook_dir }}/infrafiles"
+        - "{{ playbook_dir }}/docker-compose.yml"
+        - "{{ playbook_dir }}/.env"
+
+    - name: docker-compose up
+      community.docker.docker_compose:    
+        project_src: /home/user/simpleone-test-project
